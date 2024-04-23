@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container px-5">
+    <a class="navbar-brand " href="/">Tienda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    </div>
+    <div class="container px-5 ">
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> productos
+                <li class="nav-item"><a class="nav-link {% if  request.path == "/"%}active{% endif %}" href="/">Inicio</a></li>
+
+
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <li class="nav-item"><a class="nav-link {% if  request.path == "/admin/"%}active{% endif %}" href="/admin/">admin</a></li>  
+                    {% else %}
+
+                    {% endif %}
+
+                    <li class="nav-item"><a class="nav-link text-bg-info" href="/perfil/">{{user.username}}
+                    {% if user.UserCustom.avatar.url %}
+                        <li class="nav-item"><img class="rounded-5" src="{{user.UserCustom.avatar.url}}" style="height: 20px;" alt="tu avatar"></li>
+                    {% else %}
+                        <li class="nav-item"><img class="rounded-5" src='{% static 'home/img/avatar.png' %}' style="height: 20px;" alt="tu avatar"></li> 
+                    {% endif %}</a></li>
+
+                    <li class="nav-item"><a class="nav-link text-danger {% if  request.path == "/logout/"%}active{% endif %}" href="/logout/">Logout</a></li>    
+                {% else %}
+                    <li class="nav-item"><a class="nav-link {% if  request.path == "/about/"%}active{% endif %}" href={% url 'home:about' %}>Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link {% if  request.path == "/register/register/"%}active{% endif %}" href={% url 'apps.register:Register' %} >Registrate</a></li>
+                    <li class="nav-item"><a class="nav-link {% if  request.path == "/register/login/"%}active{% endif %}" href={% url 'apps.register:Login' %} >Inicia sesion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+                   <!--<li class="nav-item"><a class="nav-link {% if  request.path == "/register/reservas/"%}active{% endif %}" href={% url 'apps.register:Reservar' %} >Reservar</a></li>-->
+                     <!--<li class="nav-item"><a class="nav-link {% if  request.path == "/about/"%}active{% endif %}" href={% url 'home:about' %}>Nosotros</a></li>-->
+                    <!--<li class="nav-item"><a class="nav-link {% if  request.path == "/productos/productos/"%}active{% endif %}" href={% url '' %}  >Productos</a></li>
+                    <li class="nav-item"><a class="nav-link {% if  request.path == "/proveedores/proveedores/"%}active{% endif %}" href={% url 'apps.proveedores:Proveedores' %}  >Proveedores</a></li>-->
