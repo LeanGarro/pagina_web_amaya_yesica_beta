@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+</head>
+<body>
+    
+
+    <h1>Lista de Productos</h1>
+
+    <div>
+        {% if producto %}
+        {% for producto in producto %}
+            <p>{{producto.name}} | marca: {{producto.marca}}| medida: {{producto.unidad}}</p>
+    
+            <button><a href="{% url 'producto_detail' producto.id %}">Ver</button>
+            {% if user.is_superuser %}
+    
+                <button><a href="{% url 'producto_update' producto.id %}">Editar</button>
+                <button><a href="{% url 'producto_delete' producto.id %}">Borrar</button>
+            {% endif %}
+        {% endfor %}
+        
+        {% else %}
+        <p>No hay productos</p>
+        {% endif %}    
+    </div>
+
+    {% if user.is_superuser %}
+        <p><button><a href="{% url 'producto_create' %}">crear producto</button></p>
+    {% endif %}
+    
+</body>
+</html>
