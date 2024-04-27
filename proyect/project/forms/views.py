@@ -55,7 +55,7 @@ class proveedorCreate(CreateView):
     """ crea un nuevo proveedor """
     model = models.proveedor
     template_name = "proveedor/form_proveedor.html"
-    fields = ["name", "surname", "email", "phone", "country", "provee"]
+    fields = '__all__'
     success_url = reverse_lazy("proveedor_list")
     
 class proveedorUpdate(UpdateView):
@@ -63,7 +63,7 @@ class proveedorUpdate(UpdateView):
     model = models.proveedor
     from_class = forms.form_del_proveedor
     template_name = "proveedor/form_proveedor.html"
-    fields = ["name", "surname", "email", "phone", "country", "provee"]
+    fields = '__all__'
     success_url = reverse_lazy("proveedor_list")
     
 class proveedorDelete(DeleteView):

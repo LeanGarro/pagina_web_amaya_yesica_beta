@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Actualizar Proveedor</title>
 </head>
 <body>
     <h1>Actualizar Proveedor</h1>
@@ -12,7 +12,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
-            {{my_form.as_table}}
+            {{form.as_table}}
         </table>
         <input type="submit" value="enviar">
     </form>

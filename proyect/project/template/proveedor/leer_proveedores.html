@@ -11,10 +11,11 @@
 
         <input type="text" name="buscar_proveedor" id="buscar_proveedor" placeholder="buscar...">
         <input type="submit" value="buscar">
-
+        
     </form>
-
-
+    
+    {% if proveedor %}
+    
     {% for proveedor in proveedor %}
 
         <li>
@@ -32,11 +33,16 @@
       
     {% endfor %}
     
+    {% else %}
+
+    <h1>No hay proveedor</h1>
+
+    {% endif %}
+
     <div>
         <button>
             <a href="{% url 'proveedor_create' %}">agregar proveedor</a>
         </button>
     <div>
-
 </body>
 </html>

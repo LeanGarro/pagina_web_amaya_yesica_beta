@@ -10,7 +10,7 @@
     <form method = "POST">
         {% csrf_token %}
 
-        <h2>¿Desea eliminar el proveedor {{proveedor.nombre}}?</h2>
+        <h2>¿Desea eliminar el proveedor {{proveedor.name}}?</h2>
 
         <input type="submit" value="Eliminar"><br><br>
         <a href="{% url 'proveedor_list' %}">Cancelar</a>
