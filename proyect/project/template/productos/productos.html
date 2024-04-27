@@ -10,22 +10,41 @@
 
     <h1>Lista de Productos</h1>
 
+    <form action="./buscar/" method="get">
+
+        <input type="text" name="busqueda_productos" id="busqueda_productos" placeholder="buscar..." value="{{request.GET.busqueda_productos}}">
+        <input type="submit" value="buscar">
+
+    </form>
+
     <div>
         {% if producto %}
+
         {% for producto in producto %}
-            <p>{{producto.name}} | marca: {{producto.marca}}| medida: {{producto.unidad}}</p>
-    
-            <button><a href="{% url 'producto_detail' producto.id %}">Ver</button>
-            {% if user.is_superuser %}
-    
-                <button><a href="{% url 'producto_update' producto.id %}">Editar</button>
-                <button><a href="{% url 'producto_delete' producto.id %}">Borrar</button>
-            {% endif %}
+        <li>
+            {{producto.name}} | marca: {{producto.marca}}| medida: {{producto.unidad}}
+        </li>
+
+        <button>
+            <a href="{% url 'producto_detail' producto.id %}">Ver</a>
+        </button>
+
+        {% if user.is_superuser %}
+
+        <button>
+            <a href="{% url 'producto_update' producto.id %}">Editar</a>
+        </button>
+
+        <button>
+            <a href="{% url 'producto_delete' producto.id %}">Borrar</a>
+        </button>
+
+        {% endif %}
         {% endfor %}
         
         {% else %}
         <p>No hay productos</p>
-        {% endif %}    
+        {% endif %}
     </div>
 
     {% if user.is_superuser %}

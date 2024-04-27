@@ -30,15 +30,14 @@
         <button>
             <a href="{% url 'proveedor_update' proveedor.id %}">actualizar</a>
         </button>|
-      
-    {% endfor %}
     
+    {% endfor %}
+
+
     {% else %}
-
     <h1>No hay proveedor</h1>
-
     {% endif %}
-
+    
     <div>
         <button>
             <a href="{% url 'proveedor_create' %}">agregar proveedor</a>

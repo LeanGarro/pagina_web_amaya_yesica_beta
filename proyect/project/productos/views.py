@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db.models  import Q
 from . import models
 from . import forms
 
@@ -48,12 +49,29 @@ class productoDelete(DeleteView):
     
     def form_valid(self, form):
         return super().form_valid(form)
-    
-class busqueda_productos(View):
-    """ muestra la vista de busqueda de proveedor """
-    def get(self, request):
-        return render(request, "./template/productos/busqueda_productos.html")
+def busqueda_productos(request):
+    """ muestra la vista de busqueda de producto """
+    return render(request, "./template/productos/productos_busqueda.html")
 
-    def post(self, request):
-        return render(request, "./template/productos/busqueda_productos.html")
+def buscar(request):
+    """ busca un producto en la DB y lo muestra"""
+    respuesta = " "
     
+    if request.GET['busqueda_productos']:
+        name = request.GET['busqueda_productos']
+        producto = models.productos.objects.filter(
+            Q(name__icontains=name) |
+            Q(marca__name__icontains = name) |
+            Q(unidad__name__icontains = name) |
+            Q(proveedor__name__icontains = name)).distinct()
+        
+        print(producto)
+        
+        if not(producto.exists()):
+            respuesta = "No existe un producto con ese nombre"
+        
+        return render(request, "./template/productos/productos_busqueda.html", {"resultado_productos": producto, "respuesta_busqueda":respuesta})
+        
+    else:
+        respuesta = "No enviaste datos"
+    return render(request, "./template/productos/productos_busqueda.html", {"respuesta_busqueda": respuesta})

@@ -20,6 +20,7 @@ class productos(models.Model):
     proveedor = models.ForeignKey(proveedor, on_delete=models.DO_NOTHING, null=True, blank=True)
     descripcion = models.TextField(max_length=200, null=False, blank=False, verbose_name="Descripción", help_text="Descripción del Producto")
     unidad = models.ForeignKey(unidades, on_delete=models.DO_NOTHING, null=True, blank=False)
+    link = models.URLField(max_length=500, null=True, blank=True, verbose_name="Link", help_text="Link del Producto en Mercado Libre")
     
     def __str__(self):
         return f"ID: {self.pk} | {self.name} Marca: {self.marca} Unidad: {self.unidad}"
