@@ -79,7 +79,3 @@ class proveedorDelete(DeleteView):
     template_name = "proveedor/proveedor_delete.html"
     success_url = reverse_lazy("proveedor_list")
     
-
-    
-
-4567
