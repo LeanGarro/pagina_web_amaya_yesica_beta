@@ -58,6 +58,13 @@ class proveedorCreate(CreateView):
     fields = '__all__'
     success_url = reverse_lazy("proveedor_list")
     
+    def form_valid(self, form):
+        # Guarda el formulario y la imagen asociada
+        instance = form.save(commit=False)
+        instance.imagen = self.request.FILES.get('imagen')
+        instance.save()
+        return super().form_valid(form)
+    
 class proveedorUpdate(UpdateView):
     """ acrualiza un proveedor de la BD """
     model = models.proveedor
@@ -74,3 +81,6 @@ class proveedorDelete(DeleteView):
     
 
     
+
+
+123
