@@ -12,23 +12,26 @@
 
     <form action="../buscar/" method="get">
 
-        <input type="text" name="buscar_proveedor" id="buscar_proveedor" placeholder="buscar...">
+        <input type="text" name="buscar_proveedor" id="buscar_proveedor" placeholder="buscar..." value="{{request.GET.buscar_proveedor}}">
         <input type="submit" value="buscar">
 
-        {{respuesta}}
     </form>
-
-    {% if proveedor %}
+    <p>{{respuesta_busqueda}}<p>
+    
+    {% if resultado_proveedor %}
     
     <ul>
-        {% for proveedor in proveedor %}
-        <li>{{proveedor}}</li>
+        {% for resultado_proveedor in resultado_proveedor %}
+        <li>
+            ID:{{resultado_proveedor.id}} |
+            {{resultado_proveedor.name}} |
+            E-mail : {{resultado_proveedor.email}} |
+            Proevee: {{resultado_proveedor.provee}}
+        </li>
         {% endfor %}
     </ul>
-
-    {% else %}
-    <p>no hay resultados.<p>
     {% endif %}
+
 
     
         <!-- Bootstrap core JS-->

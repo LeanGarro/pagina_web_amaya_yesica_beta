@@ -3,15 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Listado de proveedores</title>
 </head>
 <body>
+
+    <form action="../buscar/" method="get">
+
+        <input type="text" name="buscar_proveedor" id="buscar_proveedor" placeholder="buscar...">
+        <input type="submit" value="buscar">
+
+        {{respuesta_busqueda}}
+    </form>
+
+    {% if resultado_proveedor %}
+    
+    <ul>
+        {% for resultado_proveedor in resultado_proveedor %}
+        <li>{{resultado_proveedor}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+
     
     {% for proveedor in proveedor %}
 
         <li>
             {{proveedor}}
         </li>
+        <button>
+            <a href="{% url 'proveedor_detalle' proveedor.id %}">ver</a>
+        </button>
         <button>
             <a href="{% url 'proveedor_delete' proveedor.id %}">Eliminar</a>
         </button>|

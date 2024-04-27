@@ -13,7 +13,7 @@
         </header>
         <main>
 
-            {% if my_form.erroes %}
+            {% if form.errors %}
             
             <p>esta mal los datos</p>
 
@@ -22,7 +22,7 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <table>
-                    {{ my_form.as_p }}
+                    {{ form.as_p }}
                 </table>
 
                 <input type="submit" value="enviar">

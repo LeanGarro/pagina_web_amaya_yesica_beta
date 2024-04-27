@@ -4,103 +4,66 @@ from django.http import HttpResponse
 from . import models
 from . import forms
 
+from django.db.models import Q
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
     
-def form_proveedor_resived(request):    
-    if request.method == "POST":
-        my_form= forms.form_del_proveedor(request.POST, request.FILES)
-    
-        print(my_form)
-    
-        if my_form.is_valid():
-            my_form.save()
-            
-            print("success")
-            
-            proveedor = models.proveedor.objects.all()
-            return render(request, "./template/leer_proveedores.html", {"proveedor": proveedor})
-    
-    else:
-        print("fail")
-        my_form= forms.form_del_proveedor()
-        
-    return render(request, "./template/form_proveedor.html", {"my_form": my_form})
-
 
 def busqueda_proveedor(request):
-    return render(request, "./template/busqueda_proveedor.html")
+    """ muestra la vista de busqueda de proveedor """
+    return render(request, "./template/proveedor/busqueda_proveedor.html")
 
 def buscar(request):
+    """ busca un proveedor en la DB y lo muestra"""
     if request.GET['buscar_proveedor']:
         name = request.GET['buscar_proveedor']
-        proveedor = models.proveedor.objects.filter(name__icontains=name)
+        proveedor = models.proveedor.objects.filter(
+            Q(name__icontains=name) |
+            Q(email__icontains = name) |
+            Q(provee__icontains = name)).distinct()
         
-        return render(request, "./template/busqueda_proveedor.html", {"proveedor": proveedor})
+        return render(request, "./template/proveedor/busqueda_proveedor.html", {"resultado_proveedor": proveedor})
         
     else:
-        respuesta = "No enviaste datos"    
+        respuesta = "No enviaste datos"
     
-    return render(request, "./template/busqueda_proveedor.html", {"respuesta": respuesta})
-
-
-def leer_proveedor(request):
-    proveedor = models.proveedor.objects.all()
-    return render(request, "./template/leer_proveedores.html", {"proveedor": proveedor})
-
-def borrar_proveedor(request, id):
-    proveedor = models.proveedor.objects.get(id=id)
-    proveedor.delete()
-    
-    proveedor = models.proveedor.objects.all()
-    return render(request, "./template/leer_proveedores.html", {"proveedor": proveedor})
-
-
-def actualizar_proveedor(request, id):
-    proveedor = models.proveedor.objects.get(id=id)
-    
-    if request.method == "POST":
-        my_form = forms.form_del_proveedor(request.POST, request.FILES, instance=proveedor)
-        
-        if my_form.is_valid():
-            my_form.save()
-            
-            proveedor = models.proveedor.objects.all()
-            
-            return render(request, "./template/leer_proveedores.html", {"proveedor": proveedor})
-
-    else:
-        my_form = forms.form_del_proveedor(instance=proveedor)
-    
-    return render(request, "./template/actualizar_proveedor.html", {"proveedor": proveedor, "my_form": my_form})
+    return render(request, "./template/proveedor/busqueda_proveedor.html", {"respuesta_busqueda": respuesta})
 
 
 class proveedorList(ListView):
+    """ lista los proveedores en la DB """
     model = models.proveedor
-    template_name = "forms/templates/forms/leer_proveedores.html"
+    template_name = "proveedor/leer_proveedores.html"
     context_object_name = "proveedor"
     
 class proveedordetalle(DetailView):
+    """ muestra el detalle de un proveedor en una nueva pagina"""
     model = models.proveedor
-    template_name = "forms/template/leer_proveedores.html"
+    template_name = "proveedor/proveedor_detail.html"
     context_object_name = "proveedor"
     
 class proveedorCreate(CreateView):
+    """ crea un nuevo proveedor """
     model = models.proveedor
-    template_name = "project/template/form_proveedor.html"
+    template_name = "proveedor/form_proveedor.html"
     fields = ["name", "surname", "email", "phone", "country", "provee"]
-    success_url = reverse_lazy("leer_proveedor")
+    success_url = reverse_lazy("proveedor_list")
     
 class proveedorUpdate(UpdateView):
+    """ acrualiza un proveedor de la BD """
     model = models.proveedor
-    success_url = "/proveedor/list"
+    from_class = forms.form_del_proveedor
+    template_name = "proveedor/form_proveedor.html"
     fields = ["name", "surname", "email", "phone", "country", "provee"]
+    success_url = reverse_lazy("proveedor_list")
     
 class proveedorDelete(DeleteView):
+    """ elimina un proveedor de la BD """
     model = models.proveedor
-    success_url = reverse_lazy("leer_proveedor")
+    template_name = "proveedor/proveedor_delete.html"
+    success_url = reverse_lazy("proveedor_list")
     
 
     
