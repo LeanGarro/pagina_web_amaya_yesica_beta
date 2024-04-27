@@ -81,6 +81,3 @@ class proveedorDelete(DeleteView):
     
 
     
-
-
-123
