@@ -12,21 +12,9 @@
         <input type="text" name="buscar_proveedor" id="buscar_proveedor" placeholder="buscar...">
         <input type="submit" value="buscar">
 
-        {{respuesta_busqueda}}
     </form>
 
-    {% if resultado_proveedor %}
-    
-    <ul>
-        {% for resultado_proveedor in resultado_proveedor %}
-        <li>{{resultado_proveedor}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 
-
-
-    
     {% for proveedor in proveedor %}
 
         <li>
@@ -43,12 +31,12 @@
         </button>|
       
     {% endfor %}
-
-    <br><br><br>
-    <button>
-        <a href="{% url 'proveedor_create' %}">agregar proveedor</a>
-    </button>
-
+    
+    <div>
+        <button>
+            <a href="{% url 'proveedor_create' %}">agregar proveedor</a>
+        </button>
+    <div>
 
 </body>
 </html>

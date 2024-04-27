@@ -16,6 +16,8 @@ def busqueda_proveedor(request):
     return render(request, "./template/proveedor/busqueda_proveedor.html")
 
 def buscar(request):
+    respuesta = " "
+    
     """ busca un proveedor en la DB y lo muestra"""
     if request.GET['buscar_proveedor']:
         name = request.GET['buscar_proveedor']
@@ -24,7 +26,12 @@ def buscar(request):
             Q(email__icontains = name) |
             Q(provee__icontains = name)).distinct()
         
-        return render(request, "./template/proveedor/busqueda_proveedor.html", {"resultado_proveedor": proveedor})
+        print(proveedor)
+        
+        if not(proveedor.exists()):
+            respuesta = "No existe un proveedor con ese nombre"
+        
+        return render(request, "./template/proveedor/busqueda_proveedor.html", {"resultado_proveedor": proveedor, "respuesta_busqueda": respuesta})
         
     else:
         respuesta = "No enviaste datos"
