@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
 from . import models
 from . import forms
 
@@ -78,6 +77,3 @@ class proveedorDelete(DeleteView):
     model = models.proveedor
     template_name = "proveedor/proveedor_delete.html"
     success_url = reverse_lazy("proveedor_list")
-    
-
-    

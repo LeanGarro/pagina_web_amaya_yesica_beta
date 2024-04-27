@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>busqueda productos</title>
+</head>
+<body> 
+
+    <h1>Lista de Productos</h1>
+    <form action="../buscar/" method="get">
+
+        <input type="text" name="busqueda_productos" id="busqueda_productos" placeholder="buscar..." value="{{request.GET.busqueda_productos}}">
+        <input type="submit" value="buscar">
+
+    </form>
+    <p>{{respuesta_busqueda}}<p>
+    
+    {% if resultado_productos %}
+    
+    <ul>
+        {% for resultado_productos in resultado_productos %}
+        <li>
+            {{resultado_productos.name}}
+            <button><a href="{% url 'producto_detail' resultado_productos.id %}">Ver</button>
+
+            {% if user.is_superuser %}
+            <button><a href="{% url 'producto_delete' resultado_productos.id %}">Borrar</button>
+            <button><a href="{% url 'producto_update' resultado_productos.id %}">Editar</button>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</body>
+</html>

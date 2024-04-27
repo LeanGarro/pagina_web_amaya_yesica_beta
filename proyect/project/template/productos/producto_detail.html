@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto datail</title>
+</head>
+<body>
+    
+    <h1>Detalle del producto</h1>
+    
+    {% if producto.imagen %}
+    <img style="width: 150px; border-radius: 30%;" src="{{producto.imagen.url}}" alt="producto">
+    {% endif %}
+
+    <p>ID: {{producto.id}}</p>
+    <p>Producto: {{producto.name}}</p>
+    <p>Marca: {{producto.marca}}</p>
+    <p>Unidad: {{producto.unidad}}</p>
+    <p>Descripción: {{producto.descripcion}}</p>
+    <p>Link: {{producto.link}}</p>
+    
+    {% if user.is_superuser %}
+    <p>Proveedoredor: {{producto.proveedor}}</p>    
+    {% endif %}
+</body>
+</html>
